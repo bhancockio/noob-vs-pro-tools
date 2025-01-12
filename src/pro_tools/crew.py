@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, Optional  # Import os module
+from typing import Any, Dict
 
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, before_kickoff, crew, task
