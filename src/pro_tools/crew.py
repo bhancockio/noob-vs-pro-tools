@@ -1,9 +1,12 @@
 import os
-from typing import Any, Dict  # Import os module
+from typing import Any, Dict, Optional  # Import os module
 
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, before_kickoff, crew, task
 
+from pro_tools.models.article import Article
+from pro_tools.models.research import Research
+from pro_tools.tools.RedditSearchTool import RedditTavilySearchTool
 from pro_tools.utils.trello_utils import TrelloUtils
 
 
@@ -16,6 +19,8 @@ class ProTools:
 
     @before_kickoff
     def prepare_inputs(self, inputs: Dict[str, Any]):
+        print("Inputs: ", inputs)
+        inputs = inputs or {}
         trello_utils = TrelloUtils()
 
         trello_todo_list_id = os.getenv("TRELLO_TOOD_LIST_ID")
@@ -23,6 +28,8 @@ class ProTools:
             raise ValueError("Environment variable 'TRELLO_TOOD_LIST_ID' is not set.")
 
         cards = trello_utils.get_cards_in_list(trello_todo_list_id)
+
+        print("Cards: ", cards)
 
         inputs["trello_cards"] = cards
         return inputs
@@ -34,7 +41,11 @@ class ProTools:
         Creates the 'researcher' agent.
         Responsible for researching AI topics and gathering actionable insights.
         """
-        return Agent(config=self.agents_config["researcher"], verbose=True)
+        return Agent(
+            config=self.agents_config["researcher"],
+            tools=[RedditTavilySearchTool()],
+            verbose=True,
+        )
 
     @agent
     def writer(self) -> Agent:
@@ -59,7 +70,11 @@ class ProTools:
         Creates the 'research_task'.
         Responsible for gathering actionable insights on AI topics.
         """
-        return Task(config=self.tasks_config["research_task"])
+        return Task(
+            config=self.tasks_config["research_task"],
+            output_file="research.txt",
+            output_pydantic=Research,
+        )
 
     @task
     def article_task(self) -> Task:
@@ -67,15 +82,19 @@ class ProTools:
         Creates the 'article_task'.
         Responsible for turning research findings into concise and actionable articles.
         """
-        return Task(config=self.tasks_config["article_task"])
+        return Task(
+            config=self.tasks_config["article_task"],
+            output_file="article.txt",
+            output_pydantic=Article,
+        )
 
-    @task
-    def trello_update_task(self) -> Task:
-        """
-        Creates the 'trello_update_task'.
-        Responsible for saving articles as comments on Trello cards and moving them to the next column.
-        """
-        return Task(config=self.tasks_config["trello_update_task"])
+    # @task
+    # def trello_update_task(self) -> Task:
+    #     """
+    #     Creates the 'trello_update_task'.
+    #     Responsible for saving articles as comments on Trello cards and moving them to the next column.
+    #     """
+    #     return Task(config=self.tasks_config["trello_update_task"])
 
     @crew
     def crew(self) -> Crew:

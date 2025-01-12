@@ -84,7 +84,8 @@ class TrelloUtils:
             response = requests.get(url, params=query)
             if response.status_code == 200:
                 data = response.json()
-                return [{"id": card["id"], "desc": card["desc"]} for card in data]
+                print("Data: ", data)
+                return [{"id": card["id"], "name": card["name"]} for card in data]
             else:
                 return f"Error: {response.status_code} - {response.text}"
         except requests.RequestException as e:
@@ -99,7 +100,12 @@ if __name__ == "__main__":
     # result = trello_utils.get_full_board_id(short_board_id)
     # print("Result:", result)
 
+    # trello_utils = TrelloUtils()
+    # board_id = os.getenv("TRELLO_BOARD_ID")
+    # lists = trello_utils.get_board_lists(board_id)
+    # print("Lists:", lists)
+
     trello_utils = TrelloUtils()
-    board_id = os.getenv("TRELLO_BOARD_ID")
-    lists = trello_utils.get_board_lists(board_id)
-    print("Lists:", lists)
+    list_id = os.getenv("TRELLO_TOOD_LIST_ID")
+    cards = trello_utils.get_cards_in_list(list_id)
+    print("Cards:", cards)

@@ -2,7 +2,7 @@ research_task:
   description: >
     Research a series of topics provided in the input. The input will be a list
     of Trello cards in the following format:
-    [{id: <Trello card ID>, desc: <description of the topic>}].
+    [[id: <Trello card ID>, name: <name of the topic>]].
     
     Your job is to research each topic on Reddit and any other relevant online sources.
     Focus on gathering actionable information for AI developers, such as:
@@ -10,7 +10,7 @@ research_task:
       - New models and how they can be used.
       - Emerging trends or techniques in the AI field.
       - Relevant discussions and insights shared by experts in the field.
-    Use the current year, 2024, as the context to ensure the information is relevant.
+    Use the current year, 2025, as the context to ensure the information is relevant.
 
     For each topic, summarize your findings in Markdown format.
 
@@ -21,9 +21,15 @@ research_task:
 
     Ensure that all findings are clear, well-structured, and easy for developers to act upon.
 
+    Here is a list of topics to research:
+
+    ```
+    {trello_cards}
+    ```
+
   expected_output: >
     A list of objects in the format:
-    [{id: <ID from input>, desc: <Original topic description>, research: <Markdown research summary>}]
+    [[id: <ID from input>, name: <Original topic name>, research: <Markdown research summary>]]
   agent: researcher
 
 article_task:
@@ -41,7 +47,7 @@ article_task:
       - Actionable, giving developers a reason to engage with the content.
 
     Example structure for an article:
-      # Topic: {topic}
+      # Topic: [topic]
       ## Summary of Findings
       - Key insight 1: ...
       - Key insight 2: ...
@@ -58,7 +64,7 @@ article_task:
 
   expected_output: >
     A list of objects in the format:
-    [{id: <ID from input>, desc: <Original topic description>, article: <Markdown article>}]
+    [[id: <ID from input>, name: <Original topic name>, article: <Markdown article>]]
   agent: writer
 
 trello_update_task:
