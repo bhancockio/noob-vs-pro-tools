@@ -7,6 +7,8 @@ from crewai.project import CrewBase, agent, before_kickoff, crew, task
 from pro_tools.models.article import Article
 from pro_tools.models.research import Research
 from pro_tools.tools.RedditSearchTool import RedditTavilySearchTool
+from pro_tools.tools.TrelloAddCardCommentTool import TrelloAddCardCommentTool
+from pro_tools.tools.TrelloUpdateCardTool import TrelloUpdateCardTool
 from pro_tools.utils.trello_utils import TrelloUtils
 
 
@@ -61,7 +63,11 @@ class ProTools:
         Creates the 'trello_manager' agent.
         Responsible for saving articles as Trello comments and moving cards.
         """
-        return Agent(config=self.agents_config["trello_manager"], verbose=True)
+        return Agent(
+            config=self.agents_config["trello_manager"],
+            tools=[TrelloAddCardCommentTool(), TrelloUpdateCardTool()],
+            verbose=True,
+        )
 
     # Define tasks
     @task
@@ -88,13 +94,13 @@ class ProTools:
             output_pydantic=Article,
         )
 
-    # @task
-    # def trello_update_task(self) -> Task:
-    #     """
-    #     Creates the 'trello_update_task'.
-    #     Responsible for saving articles as comments on Trello cards and moving them to the next column.
-    #     """
-    #     return Task(config=self.tasks_config["trello_update_task"])
+    @task
+    def trello_update_task(self) -> Task:
+        """
+        Creates the 'trello_update_task'.
+        Responsible for saving articles as comments on Trello cards and moving them to the next column.
+        """
+        return Task(config=self.tasks_config["trello_update_task"])
 
     @crew
     def crew(self) -> Crew:

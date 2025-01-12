@@ -29,7 +29,7 @@ research_task:
 
   expected_output: >
     A list of objects in the format:
-    [[id: <ID from input>, name: <Original topic name>, research: <Markdown research summary>]]
+    [[id: <ID of the Trello card>, name: <Original topic name>, research: <Markdown research summary>]]
   agent: researcher
 
 article_task:
@@ -64,7 +64,7 @@ article_task:
 
   expected_output: >
     A list of objects in the format:
-    [[id: <ID from input>, name: <Original topic name>, article: <Markdown article>]]
+    [[id: <ID of the Trello card>, name: <Original topic name>, article: <Markdown article>]]
   agent: writer
 
 trello_update_task:
