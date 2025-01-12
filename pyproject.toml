@@ -1,0 +1,25 @@
+[project]
+name = "pro_tools"
+version = "0.1.0"
+description = "pro-tools using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.95.0,<1.0.0",
+    "python-dotenv>=1.0.1",
+    "tavily-python>=0.5.0",
+]
+
+[project.scripts]
+pro_tools = "pro_tools.main:run"
+run_crew = "pro_tools.main:run"
+train = "pro_tools.main:train"
+replay = "pro_tools.main:replay"
+test = "pro_tools.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"

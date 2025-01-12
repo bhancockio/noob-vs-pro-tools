@@ -1,0 +1,82 @@
+research_task:
+  description: >
+    Research a series of topics provided in the input. The input will be a list
+    of Trello cards in the following format:
+    [{id: <Trello card ID>, desc: <description of the topic>}].
+    
+    Your job is to research each topic on Reddit and any other relevant online sources.
+    Focus on gathering actionable information for AI developers, such as:
+      - New features in libraries or frameworks.
+      - New models and how they can be used.
+      - Emerging trends or techniques in the AI field.
+      - Relevant discussions and insights shared by experts in the field.
+    Use the current year, 2024, as the context to ensure the information is relevant.
+
+    For each topic, summarize your findings in Markdown format.
+
+    Examples of actionable insights:
+      - "OpenAI just released a new API for fine-tuning GPT-4, which supports smaller datasets."
+      - "PyTorch 2.1 now includes native support for dynamic computation graphs."
+      - "Reddit's AI community is actively discussing optimization techniques for diffusion models."
+
+    Ensure that all findings are clear, well-structured, and easy for developers to act upon.
+
+  expected_output: >
+    A list of objects in the format:
+    [{id: <ID from input>, desc: <Original topic description>, research: <Markdown research summary>}]
+  agent: researcher
+
+article_task:
+  description: >
+    Using the research provided from the `research_task`, generate a short, actionable article
+    for each topic. Each article must:
+      - Begin with the original topic title.
+      - Include a **Summary of Findings** section summarizing the key insights in a few sentences.
+      - Include a **Details** section explaining each insight in more detail, formatted as Markdown.
+      - End with an **Actionable Steps** section suggesting how developers can apply the information.
+
+    Your goal is to ensure that the article is:
+      - Informative and easy to read for AI developers.
+      - Written in a clear, concise style that saves time.
+      - Actionable, giving developers a reason to engage with the content.
+
+    Example structure for an article:
+      # Topic: {topic}
+      ## Summary of Findings
+      - Key insight 1: ...
+      - Key insight 2: ...
+      ## Details
+      ### Insight 1
+      Description...
+      ### Insight 2
+      Description...
+      ## Actionable Steps
+      - Step 1: ...
+      - Step 2: ...
+
+    Ensure that all articles are formatted in Markdown and free of errors.
+
+  expected_output: >
+    A list of objects in the format:
+    [{id: <ID from input>, desc: <Original topic description>, article: <Markdown article>}]
+  agent: writer
+
+trello_update_task:
+  description: >
+    Using the articles generated from the `article_task`, update the corresponding
+    Trello cards as follows:
+      - Add the article content as a comment on the Trello card. 
+        Use the Trello card ID from the input to ensure accuracy.
+      - Move the Trello card to the next column in the workflow.
+      - Confirm that the comment was successfully added and the card was moved.
+
+    Use the Trello tools provided for interacting with the Trello API.
+    Ensure that all cards are updated accurately and verify each operation for completeness.
+
+    If there are any errors (e.g., Trello API failure), document them clearly
+    and retry the failed operation if possible.
+
+  expected_output: >
+    Successfully updated Trello cards with the articles as comments and moved the
+    cards to the next column. Any errors must be logged for review.
+  agent: trello_manager
