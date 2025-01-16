@@ -21,7 +21,6 @@ class ProTools:
 
     @before_kickoff
     def prepare_inputs(self, inputs: Dict[str, Any]):
-        print("Inputs: ", inputs)
         inputs = inputs or {}
         trello_utils = TrelloUtils()
 
@@ -30,8 +29,6 @@ class ProTools:
             raise ValueError("Environment variable 'TRELLO_TOOD_LIST_ID' is not set.")
 
         cards = trello_utils.get_cards_in_list(trello_todo_list_id)
-
-        print("Cards: ", cards)
 
         inputs["trello_cards"] = cards
         return inputs

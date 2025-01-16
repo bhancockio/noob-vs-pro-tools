@@ -4,7 +4,7 @@ research_task:
     of Trello cards in the following format:
     [[id: <Trello card ID>, name: <name of the topic>]].
     
-    Your job is to research each topic on Reddit and any other relevant online sources.
+    Your job is to research each topic on Reddit.
     Focus on gathering actionable information for AI developers, such as:
       - New features in libraries or frameworks.
       - New models and how they can be used.
