@@ -39,16 +39,7 @@ This command initializes the pro-tools Crew, assembling the agents and assigning
 
 This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
 
-## Understanding Your Crew
-
-The pro-tools Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
-
-## Support
-
-For support, questions, or feedback regarding the ProTools Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
-
-Let's create wonders together with the power and simplicity of crewAI.
+## Important Resources To Connect Your Crew to Trello
+- https://www.merge.dev/blog/trello-api-key
+- https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-lists-get
+- https://docs.tavily.com/docs/python-sdk/tavily-search/getting-started
